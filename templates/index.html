@@ -1,79 +1,92 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8>
-    <title>248/title>
+    <meta charset="UTF-8">
+    <title>2048游戏</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
-            background: linear-gradient(135deg, #faf8ef 0, #eee4da 10 
+            background: linear-gradient(135deg, #faf8ef 0%, #eee4da 100%);
             text-align: center; 
             margin: 0;
             padding: 20px;
         }
         h1 { 
-            color: #776e+65 
-            text-shadow: 2px 2px 4 rgba(0,0,0,0.1);
+            color: #776e65; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
         #game-container { 
             margin: 30px auto; 
-            width: 40        background: #bbada0; 
-            padding: 15            border-radius:10x;
-            box-shadow: 0 8px 25 rgba(0,0,0
+            width: 400px;
+            background: #bbada0; 
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
         .row { display: flex; }
         .cell {
-            width: 85ight:85: 5px;
-            background: #cdc1b4lor: #77665; font-size: 2em;
-            display: flex; align-items: center; justify-content: center;
+            width: 85px;
+            height: 85px;
+            margin: 5px;
+            background: #cdc1b4;
+            color: #776e65;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 5px;
             font-weight: bold;
-            transition: all 00.15s ease;
+            transition: all 0.15s ease;
         }
-        .cell[data-value=2][object Object] background: #eee4da; color: #7760000005; }
-        .cell[data-value=4][object Object] background: #ede0c8color: #7760000005; }
-        .cell[data-value=8] { background: #f2b179color: #f92; }
-        .cell[data-value=16] { background: #f59563color: #f92; }
-        .cell[data-value=32] [object Object] background: #f67c5f; color: #f92; }
-        .cell[data-value=64] [object Object] background: #f65e3b; color: #f92; }
-        .cell[data-value="128][object Object] background: #edcf72lor: #f9f6f2; font-size: 1.8m; }
-        .cell[data-value="256][object Object] background: #edcc61lor: #f9f6f2; font-size: 1.8m; }
-        .cell[data-value="512] { background: #edc850lor: #f9f6f2; font-size: 1.8m; }
-        .cell[data-value="1024] [object Object]background: #edc53f; color: #f9f6f2; font-size: 1.6m; }
-        .cell[data-value="2048] [object Object]background: #edc22e; color: #f9f6f2; font-size: 1.6; }
+        .cell[data-value="2"] { background: #eee4da; color: #776e65; }
+        .cell[data-value="4"] { background: #ede0c8; color: #776e65; }
+        .cell[data-value="8"] { background: #f2b179; color: #f9f6f2; }
+        .cell[data-value="16"] { background: #f59563; color: #f9f6f2; }
+        .cell[data-value="32"] { background: #f67c5f; color: #f9f6f2; }
+        .cell[data-value="64"] { background: #f65e3b; color: #f9f6f2; }
+        .cell[data-value="128"] { background: #edcf72; color: #f9f6f2; font-size: 1.8em; }
+        .cell[data-value="256"] { background: #edcc61; color: #f9f6f2; font-size: 1.8em; }
+        .cell[data-value="512"] { background: #edc850; color: #f9f6f2; font-size: 1.8em; }
+        .cell[data-value="1024"] { background: #edc53f; color: #f9f6f2; font-size: 1.6em; }
+        .cell[data-value="2048"] { background: #edc22e; color: #f9f6f2; font-size: 1.6em; }
         #score { 
-            margin: 10 
-            font-size: 10.2        background: rgba(255,0.3);
-            padding: 10px20            border-radius:10           display: inline-block;
+            margin: 10px;
+            font-size: 1.2em;
+            background: rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
         }
         button { 
-            margin: 10           padding: 12px 24 
-            font-size:1        background: linear-gradient(45deg, #88
+            margin: 10px;
+            padding: 12px 24px;
+            font-size: 1em;
+            background: linear-gradient(45deg, #8f7a66, #9f8b77);
             color: white;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15 rgba(0,0,0
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         button:hover {
-            transform: translateY(-2);
-            box-shadow: 0 6px 20 rgba(0,0,0
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
         .instructions {
-            margin-top:20
-            color: #77.6e+66;
-            font-size:09;
+            margin-top: 20px;
+            color: #776e65;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <h1 2048戏</h1>
-    <div id="score">分数: <span id="score-value">0/span></div>
+    <h1>2048游戏</h1>
+    <div id="score">分数: <span id="score-value">0</span></div>
     <div id="game-container"></div>
-    <button onclick=restartGame()">重新开始</button>
-    <div class="instructions>
+    <button onclick="restartGame()">重新开始</button>
+    <div class="instructions">
         <p>使用方向键 ↑↓←→ 移动方块，相同数字合并得分</p>
     </div>
     <script>
@@ -82,13 +95,16 @@
 
         function initBoard() {
             board = Array.from({length: size}, () => Array(size).fill(0));
-            score = 0         addRandomTile();
+            score = 0;
+            addRandomTile();
             addRandomTile();
             updateBoard();
         }
 
-        function addRandomTile()[object Object]         let empty = [];
-            for (let r =0 r < size; r++)[object Object]               for (let c =0 c < size; c++) {
+        function addRandomTile() {
+            let empty = [];
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
                     if (board[r][c] === 0) {
                         empty.push([r, c]);
                     }
@@ -96,13 +112,16 @@
             }
             if (empty.length === 0) return;
             let [r, c] = empty[Math.floor(Math.random() * empty.length)];
-            board[r][c] = Math.random() < 0.92        }
+            board[r][c] = Math.random() < 0.9 ? 2 : 4;
+        }
 
         function updateBoard() {
             const container = document.getElementById('game-container');
-            container.innerHTML = ';
-            for (let r =0 r < size; r++)[object Object]             const rowDiv = document.createElement('div');
-                rowDiv.className = 'row;               for (let c =0 c < size; c++) {
+            container.innerHTML = '';
+            for (let r = 0; r < size; r++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'row';
+                for (let c = 0; c < size; c++) {
                     const cellDiv = document.createElement('div');
                     cellDiv.className = 'cell';
                     const value = board[r][c];
@@ -117,13 +136,15 @@
             document.getElementById('score-value').textContent = score;
         }
 
-        function move(dir)[object Object]         let moved = false;
+        function move(dir) {
+            let moved = false;
             
-            function slideAndMerge(row)[object Object]                // 移除空格
+            function slideAndMerge(row) {
+                // 移除空格
                 let arr = row.filter(x => x !== 0);
                 
                 // 合并相同数字
-                for (let i =0; i < arr.length - 1; i++) {
+                for (let i = 0; i < arr.length - 1; i++) {
                     if (arr[i] === arr[i + 1]) {
                         arr[i] *= 2;
                         score += arr[i];
@@ -143,19 +164,20 @@
             }
 
             // 处理每一行/列
-            for (let i =0 i < size; i++)[object Object]               let row = [];
+            for (let i = 0; i < size; i++) {
+                let row = [];
                 
                 // 根据方向提取行或列
-                if (dir ===left' || dir === 'right') {
+                if (dir === 'left' || dir === 'right') {
                     row = [...board[i]];
-                } else if (dir ===up|| dir === 'down') {
-                    for (let j =0 j < size; j++) {
+                } else if (dir === 'up' || dir === 'down') {
+                    for (let j = 0; j < size; j++) {
                         row.push(board[j][i]);
                     }
                 }
                 
                 // 如果是向右或向下，需要反转
-                if (dir === right|| dir === 'down') {
+                if (dir === 'right' || dir === 'down') {
                     row.reverse();
                 }
                 
@@ -163,22 +185,22 @@
                 let newRow = slideAndMerge(row);
                 
                 // 如果是向右或向下，需要再次反转
-                if (dir === right|| dir === 'down') {
+                if (dir === 'right' || dir === 'down') {
                     newRow.reverse();
                 }
                 
                 // 更新棋盘
-                for (let j =0 j < size; j++) {
+                for (let j = 0; j < size; j++) {
                     let oldValue, newValue;
                     
-                    if (dir ===left' || dir === 'right') {
+                    if (dir === 'left' || dir === 'right') {
                         oldValue = board[i][j];
                         newValue = newRow[j];
                         if (oldValue !== newValue) {
                             moved = true;
                             board[i][j] = newValue;
                         }
-                    } else if (dir ===up|| dir === 'down') {
+                    } else if (dir === 'up' || dir === 'down') {
                         oldValue = board[j][i];
                         newValue = newRow[j];
                         if (oldValue !== newValue) {
@@ -189,7 +211,8 @@
                 }
             }
             
-            if (moved)[object Object]               addRandomTile();
+            if (moved) {
+                addRandomTile();
                 updateBoard();
                 if (isGameOver()) {
                     setTimeout(() => {
@@ -199,9 +222,10 @@
             }
         }
 
-        function isGameOver()[object Object]
+        function isGameOver() {
             // 检查是否有空格
-            for (let r =0 r < size; r++)[object Object]               for (let c =0 c < size; c++) {
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
                     if (board[r][c] === 0) {
                         return false;
                     }
@@ -209,15 +233,17 @@
             }
             
             // 检查是否有相邻的相同数字
-            for (let r =0 r < size; r++)[object Object]               for (let c =0 c < size; c++) {
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
                     const current = board[r][c];
                     
                     // 检查右边
-                    if (c < size - 1 && board[r][c + 1                   return false;
+                    if (c < size - 1 && board[r][c + 1] === current) {
+                        return false;
                     }
                     
                     // 检查下边
-                    if (r < size - 1 && board[r + 1c] === current) {
+                    if (r < size - 1 && board[r + 1][c] === current) {
                         return false;
                     }
                 }
@@ -226,18 +252,18 @@
             return true;
         }
 
-        document.addEventListener(keydowne => [object Object]
-            if (e.key ===ArrowLeft') move('left);
-            if (e.key === ArrowRight) move(ght);
-            if (e.key ===ArrowUp') move(up);
-            if (e.key ===ArrowDown') move('down');
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft') move('left');
+            if (e.key === 'ArrowRight') move('right');
+            if (e.key === 'ArrowUp') move('up');
+            if (e.key === 'ArrowDown') move('down');
         });
 
-        function restartGame() [object Object]         initBoard();
+        function restartGame() {
+            initBoard();
         }
 
         window.onload = initBoard;
     </script>
 </body>
-</html> 
 </html> 
